@@ -1,0 +1,27 @@
+		#Requirements
+git (Linux | macOS | Windows)
+
+python3 (Linux | macOS | Windows)
+
+docker (Linux | macOS | Windows)
+
+at least 20GB of free storage
+
+
+#Install
+python3 -m pip install exegol
+
+		#Installation d'un container
+
+exegol info
+
+exegol install <image tag>
+
+Install (or build) (↓ ~25GB max):  exegol install
+  Open an exegol shell:              exegol start
+  Show exegol images & containers:   exegol info
+  Update an image:                   exegol update
+  See commands examples to execute:  exegol exec -h
+  Remove a container:                exegol remove
+  Uninstall an image:                exegol uninstall
+  Stop a container:                  exegol stop

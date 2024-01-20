@@ -1,0 +1,14 @@
+# Mettre à jour les listes de paquets et installer les paquets requis
+sudo apt update && apt -y install ca-certificates wget net-tools gnupg
+
+# Télécharger la clé du dépôt OpenVPN Access Server et l'ajouter aux clés de confiance
+sudo wget https://as-repository.openvpn.net/as-repo-public.asc -qO /etc/apt/trusted.gpg.d/as-repository.asc
+
+# Ajouter le dépôt OpenVPN Access Server aux sources de paquets
+sudo echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/as-repository.asc] http://as-repository.openvpn.net/as/debian bullseye main" > /etc/apt/sources.list.d/openvpn-as-repo.list
+
+# Mettre à jour à nouveau les listes de paquets pour inclure le nouveau dépôt OpenVPN
+sudo apt update
+
+# Installer OpenVPN Access Server (les lignes suivantes sont commentées pour ne pas effectuer l'installation)
+sudo apt -y install openvpn-as

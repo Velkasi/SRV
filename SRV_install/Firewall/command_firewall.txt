@@ -1,0 +1,47 @@
+sudo apt-get install iptables
+
+-p:verifie le protocole
+--dport:spécifie le port de destination 
+-j jump:effectue l'action 
+-A:ajoute une régles a une chaine
+
+#Verifie l'état actuel d'iptables
+sudo iptables -L 
+
+#autoriser le trafic sur localhost
+sudo iptables -A INPUT -i lo -j ACCEPT 
+
+#autoriser le trafic sur des ports spécifiques (ici le port 80 en tcp)
+sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT 
+
+
+		contrôler le trafic par adresse IP
+
+#Utilisez la commande suivante pour accepter le trafic à partir d'une adresse IP spécifique
+sudo iptables -A INPUT -s votre_adresse_IP_à_autoriser -j ACCEPT 
+
+#Vous pouvez également bloquer le trafic à partir d'une adresse IP
+sudo iptables -A INPUT -s votre_adresse_IP_à_bloquer -j DROP
+
+#Vous pouvez rejeter le trafic à partir d'une plage d'adresses IP, avec la commande suivante :
+sudo iptables -A INPUT -m iprange --src-range votre_adresse_IP_debut-votre_adresse_IP_fin -j REJECT
+
+		supprimer le trafic indésirable
+
+#Si vous définissez des règles de pare-feu Iptables, vous devez empêcher les accès non autorisés en supprimant tout trafic provenant d'autres ports :
+sudo iptables -A INPUT -j DROP
+
+		supprimer une règle
+
+#Une méthode plus précise consiste à supprimer le numéro de ligne d'une règle.
+sudo iptables -P INPUT DROP 
+
+#Tout d'abord, répertoriez toutes les règles en saisissant ce qui suit :
+sudo iptables -L --line-numbers
+
+#Recherchez la ligne de la règle de pare-feu que vous souhaitez supprimer et exécutez cette commande :
+sudo iptables -D INPUT <Number>
+
+		enregistrer vos modifications
+
+sudo -s iptables-save -c

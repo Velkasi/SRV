@@ -1,0 +1,76 @@
+sudo apt install fail2ban
+
+#Comme le recommande Fail2ban, créez un fichier de configuration local de vos services en copiant le fichier "jail" :
+sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+
+#Ouvrez ensuite le fichier avec un éditeur de texte :
+sudo nano /etc/fail2ban/jail.local
+
+#À titre d’exemple d’utilisation, le fait d’avoir les lignes suivantes dans la section [sshd] activera des restrictions uniquement pour le service OpenSSH :
+
+[sshd]
+enabled = true #active fail2ban pour le bloc
+port = ssh #port du service (par défaut 22 pour ssh)
+filter = sshd #fait référence au filtre fail2ban
+maxretry = 3 #nombre max de tentative avant les mesures
+findtime = 5m #fenetre de temps, si le nombre maxretry est atteint, l'adresse ip est bann
+bantime  = 30m #durée du bannissement
+
+#Redémarrez le service pour vous assurer qu'il s'exécute avec les personnalisations appliquées :
+sudo service fail2ban restart
+
+		CONFIG DE BASES POUR KASM / OPENVPN / SSH
+
+ [sshd]
+ enabled = true
+ port = ssh
+ filter = sshd
+ maxretry = 3
+ findtime = 5m
+ bandtime = 30m
+
+ [https]
+ enabled = true
+ port = https
+ filter = https
+ maxretry = 5
+ findtime = 5m
+ bantime = 30m
+
+ [openvpn-980]
+ enabled = true
+ port = 980
+ filter = openvpn-980
+ maxretry = 5
+ findtime = 5m
+ bantime = 30m
+
+ [openvpn-943]
+ enabled = true
+ port = 943
+ filter = openvpn-943
+ maxretry = 5
+ findtime = 5m
+ bantime = 30m
+
+		Créez le fichier de filtre pour OpenVPN sur le port 980
+
+sudo nano /etc/fail2ban/filter.d/openvpn-980.conf
+
+Et collez les régles suivants dans le fichier:
+
+# Fail2Ban configuration file for OpenVPN on port 980
+[Definition]
+failregex = .* ovpn-server\[[0-9]+\]: (\S+\/\S+ )?client (.*?)( \(.*\))? failed to authenticate.*
+ignoreregex =
+
+		idem pour le port 943
+
+sudo nano /etc/fail2ban/filter.d/openvpn-943.conf
+
+# Fail2Ban configuration file for OpenVPN on port 943
+[Definition]
+failregex = .* ovpn-server\[[0-9]+\]: (\S+\/\S+ )?client (.*?)( \(.*\))? failed to authenticate.*
+ignoreregex =
+
+sudo service fail2ban restart

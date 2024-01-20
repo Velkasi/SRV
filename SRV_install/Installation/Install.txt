@@ -1,0 +1,30 @@
+		Modifier le port d'écoute SSH par défaut
+
+sudo nano /etc/ssh/sshd_config
+
+#Vous devriez trouver les lignes suivantes ou équivalentes :
+
+# What ports, IPs and protocols we listen for
+Port 22
+
+#Veillez toutefois à ne pas renseigner un numéro de port déjà utilisé sur votre système. Pour plus de sécurité, utilisez un numéro entre 49152 et 65535.
+
+#Redémarrez le service:
+sudo systemctl restart sshd
+
+		Créer un utilisateur avec des droits restreints
+
+sudo adduser NomUtilisateurPersonnalisé
+
+		Désactiver l'accès au serveur via l'utilisateur root
+
+sudo nano /etc/ssh/sshd_config
+
+Remplacez yes par no sur la ligne PermitRootLogin.
+
+# Authentication: 
+LoginGraceTime 120
+PermitRootLogin yes 
+StrictModes yes
+
+sudo systemctl restart sshd

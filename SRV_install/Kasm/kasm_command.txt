@@ -1,0 +1,16 @@
+Commande KASM install
+
+
+sudo dd if=/dev/zero bs=1M count=1024 of=/mnt/1GiB.swap #Une fois cette commande exécutée avec succès, vous disposerez d'un fichier d'échange de 1 Go prêt à être utilisé
+
+sudo chmod 600 /mnt/1GiB.swap #donne les droits
+sudo mkswap /mnt/1GiB.swap #Un système de fichiers de type swap permet à Linux d'utiliser ce fichier comme espace d'échange, qui est utilisé lorsque le système manque de mémoire RAM physique
+
+sudo swapon /mnt/1GiB.swap #ou sudo swapoff /mnt/1GiB.swap
+
+echo '/mnt/1GiB.swap swap swap default 0 0' | sudo tee -a /etc/fstab /mnt/1GiB.swap swap swap defaults 0 0 #Cela indiquera au système d'utiliser le fichier "/mnt/1GiB.swap" comme partition d'échange lors du démarrage
+
+wget https://kasm-static-content.s3.amazonaws.com/kasm_release_1.13.1.421524.tar.gz #télécharge kasm
+
+tar -xf kasm_release_1.13.1.421524.tar.gz #décompress le fichier tar.gz
+sudo bash kasm_release #install avec bash

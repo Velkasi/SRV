@@ -1,0 +1,55 @@
+		#Installation dependance
+
+sudo apt-get update
+sudo apt-get install \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+
+#Création du dossier keyrings et téléchargement de docker
+
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt-get update
+
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+sudo groupadd docker
+sudo usermod -aG docker <nom_utilisateur>
+
+newgrp docker
+
+		#Pour distrib linux / parrot
+
+sudo apt install -y docker.io
+sudo systemctl enable docker --now
+sudo usermod -aG docker $USER
+#relog ou reboot
+newgrp docker
+
+		#Commande Docker
+
+docker run <nom_image> #démarre container depuis une image
+docker pull <nom_image> #télécharge une image
+docker rmi <nom_image> # efface une image
+
+docker run --name <nom_container> <nom_image>
+docker run -p HostPort:ContainerPort #map un port
+
+docker run -d <nom_image> #démarre container en background
+
+docker container ls #liste les containers lancés
+docker container ls --all #liste tous les containers
+
+docker start <nom_container>
+docker attach <nom_container> #contrôler le container avec notre ligne de commande
+docker stop <nom_container>
+docker restart <nom_container>
+docker kill <nom_container>
+docker rm <nom_container> #efface le container
