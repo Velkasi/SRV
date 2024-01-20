@@ -1,0 +1,42 @@
+	INSTALLATION VPS
+
+
+installation du desktop (ici XFCE)
+
+sudo apt update
+sudo apt install xfce4 xfce4-goodies xorg dbus-x11 x11-xserver-utils
+
+
+installation de xrdp:
+sudo apt install xrdp 
+
+Status du RDP:
+sudo systemctl status xrdp
+
+
+ajouter xrdp certif:
+sudo adduser xrdp ssl-cert
+
+sudo ufw allow from 10.245.80.4/16 to any port 3389
+
+
+restart xrdp:
+sudo systemctl restart xrdp
+
+
+INSTALL BRAVE:
+
+sudo apt install curl
+
+sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+
+echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+
+sudo apt update
+
+sudo apt install brave-browser
+
+
+LINUX ajouter utilisateur:
+
+adduser --ingroup nom-du-groupe nom-de-l'utilisateur
